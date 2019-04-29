@@ -1,4 +1,5 @@
 import React from 'react';
+import { Trans } from 'react-i18next';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -6,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
+import Tooltip from '@material-ui/core/Tooltip';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import styles from './layout/styles.jsx';
@@ -65,9 +67,11 @@ class Header extends React.Component {
                     open={this.state.open}
                 >
                     <div className={classes.toolbarIcon}>
-                        <IconButton onClick={this.handleDrawer}>
-                            <ChevronLeftIcon />
-                        </IconButton>
+                        <Tooltip title={<Trans>app.admin.layout.action.hide</Trans>}>
+                            <IconButton onClick={this.handleDrawer}>
+                                <ChevronLeftIcon />
+                            </IconButton>
+                        </Tooltip>
                     </div>
                     <Divider />
                     <List>{mainListItems}</List>

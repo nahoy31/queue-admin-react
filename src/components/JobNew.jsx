@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,6 +19,7 @@ import { Trans } from 'react-i18next';
 import styles from './layout/styles.jsx';
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
+import PageAppBar from './layout/PageAppBar.jsx';
 import JobCreateForm from './job/JobCreateForm.jsx';
 
 class JobNew extends React.Component {
@@ -47,21 +49,15 @@ class JobNew extends React.Component {
                 <main className={this.props.classes.content}>
                     <div className={this.props.classes.appBarSpacer} />
 
-                    <AppBar position="static" color="default" className={this.props.classes.pageAppBar}>
-                        <Toolbar>
-                            <Typography variant="h4" color="inherit" className={this.props.classes.grow}>
-                                <Trans>app.admin.job.title.new</Trans>
-                            </Typography>
-
-                            <div>
-                                <IconButton color="inherit">
-                                    <Link to={'/admin/jobs/'} className={this.props.classes.underlineNone}>
-                                        <ArrowBackIcon fontSize={"large"} className={this.props.classes.icon} />
-                                    </Link>
-                                </IconButton>
-                            </div>
-                        </Toolbar>
-                    </AppBar>
+                    <PageAppBar title="app.admin.job.title.new">
+                        <Tooltip title={<Trans>app.admin.layout.action.return</Trans>}>
+                            <IconButton color="inherit">
+                                <Link to={'/admin/jobs/'} className={this.props.classes.underlineNone}>
+                                    <ArrowBackIcon fontSize={"large"} className={this.props.classes.icon} />
+                                </Link>
+                            </IconButton>
+                        </Tooltip>
+                    </PageAppBar>
 
                     <div className={this.props.classes.pad}>
                         <Paper className={this.props.classes.paper}>

@@ -137,6 +137,42 @@ const styles = theme => ({
         marginBottom: theme.spacing.unit * 2
     },
 
+    button: {
+        margin: theme.spacing.unit,
+    },
+
+    formControl: {
+        marginBottom: theme.spacing.unit * 2
+    },
+
+    bootstrapRoot: {
+        'label + &': {
+            marginTop: theme.spacing.unit * 3,
+        },
+    },
+    bootstrapInput: {
+        borderRadius: 4,
+        position: 'relative',
+        backgroundColor: theme.palette.common.white,
+        border: '1px solid #ced4da',
+        fontSize: 16,
+        width: 'inherit',
+        padding: '10px 12px',
+        transition: theme.transitions.create(['border-color', 'box-shadow']),
+        '&:focus': {
+            borderRadius: 4,
+            borderColor: '#80bdff',
+            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+        },
+    },
+    bootstrapFormLabel: {
+        color: '#000000',
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+
+
+
     underlineNone: {
         textDecoration: "none"
     }

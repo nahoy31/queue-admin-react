@@ -1,36 +1,53 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import FormControl from '@material-ui/core/FormControl';
+import InputBase from '@material-ui/core/InputBase';
+import InputLabel from '@material-ui/core/InputLabel';
+
+import withStyles from '@material-ui/core/styles/withStyles';
+import styles from '../layout/styles.jsx';
 
 const axios = require('axios');
-
-const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-    },
-    dense: {
-        marginTop: 16,
-    },
-    menu: {
-        width: 200,
-    },
-});
 
 class UserItem extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.handleSubmit = this.handleSubmit.bind(this);
+        console.log('constructor [start]');
+        this.state = {
+            entity: props.entity
+        };
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit      = this.handleSubmit.bind(this);
+    }
+
+    hello() {
+        alert('toto!');
+    }
+
+    componentDidMount() {
+        this.props.onRef(this)
+    }
+
+    componentWillUnmount() {
+        this.props.onRef(undefined)
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
     }
 
     handleSubmit(e) {
@@ -79,172 +96,112 @@ class UserItem extends React.Component {
     }
 
     render() {
+        console.log('T1 debut');
+        console.log(this.state);
+        console.log('T1 fin');
+        const entity = this.props.entity;
+
         return (
-            <form className={this.props.classes.container} noValidate autoComplete="off">
+            <form className={this.props.classes.container}>
 
                 <Typography variant="h5" component="h3">
                     My profile
                 </Typography>
 
-                <TextField
-                    id="email"
-                    label="Email"
-                    className={this.props.classes.textField}
-                    value={this.props.entity.email}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="email" className={this.props.classes.bootstrapFormLabel}>
+                        Email
+                    </InputLabel>
+                    <InputBase onChange={this.handleInputChange} fullWidth id="email" value={this.state.entity.email || ''} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <TextField
-                    id="company"
-                    label="Company"
-                    className={this.props.classes.textField}
-                    value={this.props.entity.company}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="company" className={this.props.classes.bootstrapFormLabel}>
+                        Company
+                    </InputLabel>
+                    <InputBase onChange={this.handleInputChange} fullWidth id="company" value={entity.company || ''} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <TextField
-                    id="firstName"
-                    label="FirstName"
-                    className={this.props.classes.textField}
-                    value={this.props.entity.firstName}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="firstName" className={this.props.classes.bootstrapFormLabel}>
+                        firstName
+                    </InputLabel>
+                    <InputBase onChange={this.handleInputChange} fullWidth id="firstName" value={entity.firstName || ''} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <TextField
-                    id="lastName"
-                    label="LastName"
-                    className={this.props.classes.textField}
-                    value={this.props.entity.lastName}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="lastName" className={this.props.classes.bootstrapFormLabel}>
+                        lastName
+                    </InputLabel>
+                    <InputBase onChange={this.handleInputChange} fullWidth id="lastName" value={entity.lastName || ''} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
                 <Typography variant="h5" component="h3">
                     Address
                 </Typography>
 
-                <TextField
-                    id="address1"
-                    label="Address"
-                    className={this.props.classes.textField}
-                    value={this.props.entity.address1}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="address1" className={this.props.classes.bootstrapFormLabel}>
+                        address1
+                    </InputLabel>
+                    <InputBase onChange={this.handleInputChange} fullWidth id="address1" value={entity.address1 || ''} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <TextField
-                    id="address2"
-                    label="Address 2"
-                    className={this.props.classes.textField}
-                    value={this.props.entity.address2}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="address2" className={this.props.classes.bootstrapFormLabel}>
+                        address2
+                    </InputLabel>
+                    <InputBase onChange={this.handleInputChange} fullWidth id="address2" value={entity.address2 || ''} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <TextField
-                    id="city"
-                    label="City"
-                    className={this.props.classes.textField}
-                    value={this.props.entity.city}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="city" className={this.props.classes.bootstrapFormLabel}>
+                        city
+                    </InputLabel>
+                    <InputBase onChange={this.handleInputChange} fullWidth id="city" value={entity.city || ''} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <TextField
-                    id="zipCode"
-                    label="ZipCode"
-                    className={this.props.classes.textField}
-                    value={this.props.entity.zipCode}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="zipCode" className={this.props.classes.bootstrapFormLabel}>
+                        zipCode
+                    </InputLabel>
+                    <InputBase onChange={this.handleInputChange} fullWidth id="zipCode" value={entity.zipCode || ''} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <TextField
-                    id="state"
-                    label="State"
-                    className={this.props.classes.textField}
-                    value={this.props.entity.state}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="state" className={this.props.classes.bootstrapFormLabel}>
+                        state
+                    </InputLabel>
+                    <InputBase onChange={this.handleInputChange} fullWidth id="state" value={entity.state || ''} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <TextField
-                    id="country"
-                    label="Country"
-                    className={this.props.classes.textField}
-                    value={this.props.entity.country}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="country" className={this.props.classes.bootstrapFormLabel}>
+                        country
+                    </InputLabel>
+                    <InputBase onChange={this.handleInputChange} fullWidth id="country" value={entity.country || ''} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <TextField
-                    id="website"
-                    label="Website"
-                    className={this.props.classes.textField}
-                    value={this.props.entity.website}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="website" className={this.props.classes.bootstrapFormLabel}>
+                        website
+                    </InputLabel>
+                    <InputBase onChange={this.handleInputChange} fullWidth id="website" value={entity.website || ''} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <hr />
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    //className={this.props.classes.submit}
-                    onClick={this.handleSubmit}
-                >
-                    Save
-                </Button>
+                <Divider component="hr" light={true} className={this.props.classes.divider} />
 
+                <div>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        className={this.props.classes.button}
+                        onClick={this.handleSubmit}
+                    >
+                        Save
+                    </Button>
+                </div>
             </form>
         )
     }

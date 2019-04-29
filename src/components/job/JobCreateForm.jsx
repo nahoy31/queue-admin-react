@@ -1,33 +1,19 @@
 import React from 'react';
+import { Redirect } from 'react-router'
+import { Trans } from 'react-i18next';
 
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
+import InputBase from '@material-ui/core/InputBase';
+import InputLabel from '@material-ui/core/InputLabel';
 import AddIcon from '@material-ui/icons/Add';
+import Divider from '@material-ui/core/Divider';
 
-import { Redirect } from 'react-router'
+import withStyles from '@material-ui/core/styles/withStyles';
+import styles from '../layout/styles.jsx';
 
 const axios = require('axios');
-
-const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-    },
-    dense: {
-        marginTop: 16,
-    },
-    menu: {
-        width: 200,
-    },
-});
 
 class JobCreateForm extends React.Component {
 
@@ -111,7 +97,9 @@ class JobCreateForm extends React.Component {
 
                 progress.style.display = 'none';
 
-                main.setState({redirect: true});
+                main.setState({
+                    redirect: true
+                });
             })
             .catch(function (error) {
                 console.log(error);
@@ -125,101 +113,90 @@ class JobCreateForm extends React.Component {
             <form className={this.props.classes.container}>
                 {this.renderRedirect()}
 
-                <Typography variant="h5" component="h3">
-                    New Job
-                </Typography>
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink  htmlFor="command" className={this.props.classes.bootstrapFormLabel}>
+                        <Trans>app.admin.job.command</Trans>
+                    </InputLabel>
+                    <InputBase fullWidth id="command" value={this.props.data.command} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <TextField
-                    id="command"
-                    label="Command"
-                    className={this.props.classes.textField}
-                    value={this.props.data.command}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
-
+                <table>
                 {this.state.shareholders.map((shareholder, idx) => (
-                    <FormControl key={idx} margin="normal" required fullWidth>
-                        <TextField
-                            id={"args_" + idx}
-                            key={"args_" + idx}
-                            name={"args[]"}
-                            placeholder={`Argument #${idx + 1}`}
-                            className={this.props.classes.textField}
-                            margin="normal"
-                            variant="filled"
-                            fullWidth
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
+                    <tr>
+                        <td>
+                    <FormControl key={idx} className={this.props.classes.formControl} fullWidth>
+                        <InputLabel shrink htmlFor="command" className={this.props.classes.bootstrapFormLabel}>
+                            <Trans>app.admin.job.arg</Trans> {idx + 1}
+                        </InputLabel>
 
-                        <Button
-                            variant="outlined"
-                            size="small"
-                            color="primary"
-                            type="button"
-                            data-target={idx}
-                            onClick={this.handleRemoveShareholder}
-                        >
-                            Remove element
-                        </Button>
+                        <InputBase id={"args_" + idx} name={"args[]"} value={this.props.data.command} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
                     </FormControl>
+                        </td>
+                        <td>
+                            <Button
+                                variant="outlined"
+                                size="normal"
+                                color="primary"
+                                type="button"
+                                data-target={idx}
+                                onClick={this.handleRemoveShareholder}
+                            >
+                                <Trans>app.admin.layout.action.delete</Trans> <Trans>app.admin.layout.text.element</Trans>
+                            </Button>
+                        </td>
+                    </tr>
                 ))}
+                </table>
 
-                <Button
-                    variant="outlined"
-                    size="small"
-                    color="primary"
-                    type="button"
-                    onClick={this.handleAddShareholder}
-                >
-                    <AddIcon fontSize={"small"} className={this.props.classes.icon} />
-                    Add element
-                </Button>
+                <div align={"left"} className={this.props.classes.formControl}>
+                    <Button
+                        align={"left"}
+                        variant="outlined"
+                        size="normal"
+                        color="primary"
+                        type="button"
+                        onClick={this.handleAddShareholder}
+                    >
+                        <AddIcon fontSize={"small"} className={this.props.classes.icon} />
+                        <Trans>app.admin.layout.action.add</Trans> <Trans>app.admin.layout.text.element</Trans>
+                    </Button>
+                </div>
 
-                <TextField
-                    id="queue"
-                    label="Queue"
-                    className={this.props.classes.textField}
-                    value={this.props.data.queue}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink htmlFor="queue" className={this.props.classes.bootstrapFormLabel}>
+                        <Trans>app.admin.job.queue</Trans>
+                    </InputLabel>
+                    <InputBase id="queue" value={this.props.data.queue} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <TextField
-                    id="priority"
-                    label="Priority"
-                    className={this.props.classes.textField}
-                    value={"0"}
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+                <FormControl className={this.props.classes.formControl} fullWidth>
+                    <InputLabel shrink htmlFor="priority" className={this.props.classes.bootstrapFormLabel}>
+                        <Trans>app.admin.job.priority</Trans>
+                    </InputLabel>
+                    <InputBase id="priority" value={"0"} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                </FormControl>
 
-                <hr />
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    //className={this.props.classes.submit}
-                    onClick={this.handleSubmit}
-                >
-                    Save
-                </Button>
+                <Divider component="hr" light={true} className={this.props.classes.divider} />
 
+                <div>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        className={this.props.classes.button}
+                        onClick={this.handleSubmit}
+                    >
+                        <Trans>app.admin.layout.action.save</Trans>
+                    </Button>
+
+                    <Button
+                        type="reset"
+                        variant="contained"
+                        className={this.props.classes.button}
+                    >
+                        <Trans>app.admin.layout.action.cancel</Trans>
+                    </Button>
+                </div>
             </form>
         )
     }

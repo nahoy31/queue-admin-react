@@ -103,7 +103,7 @@ class MyTableRowFooter extends React.Component {
         return (
             <TableRow>
                 <TableCell colSpan={2} style={{ 'text-align': 'right' }}>
-                    <strong>Total</strong>
+                    <strong><Trans>app.admin.layout.text.total</Trans></strong>
                 </TableCell>
                 <TableCell>
                     {this.props.total}

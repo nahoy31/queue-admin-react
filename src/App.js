@@ -12,7 +12,7 @@ import Job from './components/Job.js';
 import JobNew from './components/JobNew.jsx';
 import JobView from './components/JobView.jsx';
 import Consumption from './components/Consumption.jsx';
-import ProfileView from './components/ProfileView.jsx';
+import Settings from './components/Settings.jsx';
 
 function isAuthenticated() {
     var token = window.localStorage.getItem('access_token');
@@ -57,7 +57,7 @@ class App extends Component {
           <PrivateRoute exact path="/admin/jobs/new" component={JobNew} />
           <PrivateRoute exact path="/admin/jobs/view/:id" component={JobView} />
           <PrivateRoute exact path="/admin/consumption/" component={Consumption} />
-          <PrivateRoute exact path="/admin/profile/" component={ProfileView} />
+          <PrivateRoute exact path="/admin/profile/" component={Settings} />
         </BrowserRouter>
     );
   }

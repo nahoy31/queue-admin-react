@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -19,6 +20,7 @@ import { Trans } from 'react-i18next';
 import styles from './layout/styles.jsx';
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
+import PageAppBar from './layout/PageAppBar.jsx'
 import JobList from './job/JobList.jsx';
 import JobSearch from './job/JobSearch.jsx';
 
@@ -192,25 +194,21 @@ class Job extends React.Component {
                 <main className={this.props.classes.content}>
                     <div className={this.props.classes.appBarSpacer} />
 
-                    <AppBar position="static" color="default" className={this.props.classes.pageAppBar}>
-                        <Toolbar>
-                            <Typography variant="h4" color="inherit" className={this.props.classes.grow}>
-                                <Trans>app.admin.job.title.index</Trans>
-                            </Typography>
+                    <PageAppBar title="app.admin.job.title.index">
+                        <Tooltip title={<Trans>app.admin.layout.action.refresh</Trans>}>
+                            <IconButton color="primary" onClick={this.handleRefresh}>
+                                <RefreshIcon fontSize={"large"} className={this.props.classes.icon} />
+                            </IconButton>
+                        </Tooltip>
 
-                            <div>
-                                <IconButton color="primary" onClick={this.handleRefresh}>
-                                    <RefreshIcon fontSize={"large"} className={this.props.classes.icon} />
-                                </IconButton>
-
-                                <IconButton color="primary">
-                                    <Link to={'/admin/jobs/new'} className={this.props.classes.underlineNone}>
-                                        <AddCircleIcon fontSize={"large"} className={this.props.classes.icon} />
-                                    </Link>
-                                </IconButton>
-                            </div>
-                        </Toolbar>
-                    </AppBar>
+                        <Tooltip title={<Trans>app.admin.layout.action.create</Trans>}>
+                            <IconButton color="primary">
+                                <Link to={'/admin/jobs/new'} className={this.props.classes.underlineNone}>
+                                    <AddCircleIcon fontSize={"large"} className={this.props.classes.icon} />
+                                </Link>
+                            </IconButton>
+                        </Tooltip>
+                    </PageAppBar>
 
                     <div className={this.props.classes.pad} >
                         <JobSearch loadNotesFromServer={this.loadNotesFromServer} />

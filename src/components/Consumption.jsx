@@ -13,6 +13,7 @@ import { Trans } from 'react-i18next';
 import styles from './layout/styles.jsx';
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
+import PageAppBar from './layout/PageAppBar.jsx'
 import ConsumptionList from './consumption/ConsumptionList.jsx';
 
 const axios = require('axios');
@@ -117,11 +118,12 @@ class Consumption extends React.Component {
                 <CssBaseline />
                 <Header />
                 <main className={this.props.classes.content}>
-                    <Typography className={this.props.classes.pageTitle} variant="h4">
-                        <Trans>app.admin.consumption.title.index</Trans>
-                    </Typography>
+                    <div className={this.props.classes.appBarSpacer} />
 
-                    <div className={this.props.classes.padX}>
+                    <PageAppBar title="app.admin.consumption.title.index">
+                    </PageAppBar>
+
+                    <div className={this.props.classes.pad}>
                         <LinearProgress id='progress' style={{ display: 'none' }} />
                         <ConsumptionList datas={this.state.entities} />
                     </div>

@@ -8,8 +8,28 @@ const resources = {
         translation: {
             "app.admin.layout.title": "Task Queue Platform",
             "app.admin.layout.menu.logout": "Logout",
-            "app.admin.layout.action.delete": "Delete",
+            "app.admin.layout.action.add": "Add",
+            "app.admin.layout.action.cancel": "Cancel",
             "app.admin.layout.action.clone": "Clone",
+            "app.admin.layout.action.create": "Create",
+            "app.admin.layout.action.delete": "Delete",
+            "app.admin.layout.action.hide": "Hide",
+            "app.admin.layout.action.reduce": "Reduce",
+            "app.admin.layout.action.refresh": "Refresh",
+            "app.admin.layout.action.return": "Return",
+            "app.admin.layout.action.save": "Save",
+            "app.admin.layout.text.element": "element",
+            "app.admin.layout.text.all": "All",
+            "app.admin.layout.text.pending": "Pending",
+            "app.admin.layout.text.running": "Running",
+            "app.admin.layout.text.failed": "Failed",
+            "app.admin.layout.text.finished": "Success",
+            "app.admin.layout.text.total": "Total",
+            // nav
+            "app.admin.layout.nav.jobs": "Jobs",
+            "app.admin.layout.nav.logout": "Logout",
+            "app.admin.layout.nav.settings": "Settings",
+            "app.admin.layout.nav.settings.consumption": "Usage API",
 
             //################################
             //# consumption
@@ -27,6 +47,7 @@ const resources = {
             //################################
             "app.admin.job.id": "ID",
             "app.admin.job.command": "Command",
+            "app.admin.job.arg": "Argument",
             "app.admin.job.args": "Arguments",
             "app.admin.job.priority": "Prioriry",
             "app.admin.job.queue": "Queue",
@@ -63,15 +84,55 @@ const resources = {
             //## panels
             "app.admin.job.panel.detail": "Details",
             "app.admin.job.panel.timeline": "Timeline",
-            "app.admin.job.panel.object": "Json Object"
+            "app.admin.job.panel.object": "Json Object",
+
+            //################################
+            //# settings
+            //################################
+            //## titles
+            "app.admin.settings.title.edit": "My settings",
+            "app.admin.settings.text.informations": "General informations",
+            "app.admin.settings.text.organization": "Orgnanization",
+            "app.admin.settings.text.address": "Address",
+            "app.admin.settings.email": "E-mail",
+            "app.admin.settings.firstName": "Firstname",
+            "app.admin.settings.lastName": "Lastname",
+            "app.admin.settings.company": "Company",
+            "app.admin.settings.website": "Website",
+            "app.admin.settings.address1": "Address 1",
+            "app.admin.settings.address2": "Address 2",
+            "app.admin.settings.city": "City",
+            "app.admin.settings.zipCode": "Zip code",
+            "app.admin.settings.state": "State",
+            "app.admin.settings.country": "Country"
         }
     },
     fr: {
         translation: {
             "app.admin.layout.title": "Task Queue Platform",
             "app.admin.layout.menu.logout": "Déconnexion",
-            "app.admin.layout.action.delete": "Supprimer",
+            "app.admin.layout.action.add": "Ajouter",
+            "app.admin.layout.action.cancel": "Annuler",
             "app.admin.layout.action.clone": "Cloner",
+            "app.admin.layout.action.create": "Créer",
+            "app.admin.layout.action.delete": "Supprimer",
+            "app.admin.layout.action.hide": "Cacher",
+            "app.admin.layout.action.reduce": "Réduire",
+            "app.admin.layout.action.refresh": "Rafraîchir",
+            "app.admin.layout.action.return": "Retour",
+            "app.admin.layout.action.save": "Enregistrer",
+            "app.admin.layout.text.element": "élément",
+            "app.admin.layout.text.all": "Tous",
+            "app.admin.layout.text.pending": "En attente",
+            "app.admin.layout.text.running": "En cours",
+            "app.admin.layout.text.failed": "Échoué",
+            "app.admin.layout.text.finished": "Succès",
+            "app.admin.layout.text.total": "Total",
+            // nav
+            "app.admin.layout.nav.jobs": "Tâches",
+            "app.admin.layout.nav.logout": "Déconnexion",
+            "app.admin.layout.nav.settings": "Réglages",
+            "app.admin.layout.nav.settings.consumption": "Consommation API",
 
             //################################
             //# consumption
@@ -89,6 +150,7 @@ const resources = {
             //################################
             "app.admin.job.id": "#",
             "app.admin.job.command": "Commande",
+            "app.admin.job.arg": "Argument",
             "app.admin.job.args": "Arguments",
             "app.admin.job.priority": "Priorité",
             "app.admin.job.queue": "Queue",
@@ -125,7 +187,27 @@ const resources = {
             //## panels
             "app.admin.job.panel.detail": "Détails",
             "app.admin.job.panel.timeline": "Chronologie",
-            "app.admin.job.panel.object": "Objet Json"
+            "app.admin.job.panel.object": "Objet Json",
+
+            //################################
+            //# settings
+            //################################
+            //## titles
+            "app.admin.settings.title.edit": "Réglages",
+            "app.admin.settings.text.informations": "Informations personnelles",
+            "app.admin.settings.text.organization": "Orgnanisation",
+            "app.admin.settings.text.address": "Adresse",
+            "app.admin.settings.email": "Adresse e-mail",
+            "app.admin.settings.firstName": "Prénom",
+            "app.admin.settings.lastName": "Nom",
+            "app.admin.settings.company": "Société",
+            "app.admin.settings.website": "Site internet",
+            "app.admin.settings.address1": "Adresse ligne 1",
+            "app.admin.settings.address2": "Adresse ligne 2",
+            "app.admin.settings.city": "Ville",
+            "app.admin.settings.zipCode": "Code postal",
+            "app.admin.settings.state": "Région",
+            "app.admin.settings.country": "Pays"
         }
     }
 };
