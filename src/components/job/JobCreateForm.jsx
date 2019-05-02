@@ -1,11 +1,11 @@
 import React from 'react';
 import { Redirect } from 'react-router'
 import { Trans } from 'react-i18next';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
-import InputBase from '@material-ui/core/InputBase';
 import InputLabel from '@material-ui/core/InputLabel';
 import AddIcon from '@material-ui/icons/Add';
 import Divider from '@material-ui/core/Divider';
@@ -22,12 +22,21 @@ class JobCreateForm extends React.Component {
 
         this.state = {
             redirect: false,
-            shareholders: [{ name: "" }]
+            shareholders: [{ name: "" }],
+            data: {
+                command: "",
+                args: {
+                    0: ""
+                },
+                queue: "",
+                priority: "0"
+            }
         };
 
         this.renderRedirect = this.renderRedirect.bind(this);
         this.handleAddShareholder = this.handleAddShareholder.bind(this);
         this.handleRemoveShareholder = this.handleRemoveShareholder.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -56,15 +65,31 @@ class JobCreateForm extends React.Component {
         });
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        var newData = this.state.data;
 
+        if (name === "args[]") {
+            var idx = target.dataset.target;
+            newData["args"][idx] = value;
+        } else {
+            newData[name] = value;
+        }
+
+        this.setState({
+            data: newData
+        });
+    }
+
+    handleSubmit = () => {
         var main      = this;
         var progress  = document.getElementById('progress');
         var token     = window.localStorage.getItem('access_token');
 
         const instance = axios.create({
-            baseURL: 'http://localhost:8002',
+            baseURL: 'http://localhost:5000',
             timeout: 5000,
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -88,13 +113,10 @@ class JobCreateForm extends React.Component {
             }
         }
 
-        console.log(form_data);
         progress.style.display = 'block';
 
         instance.post('/api/jobs', form_data)
             .then(function (response) {
-                console.log(response);
-
                 progress.style.display = 'none';
 
                 main.setState({
@@ -110,49 +132,74 @@ class JobCreateForm extends React.Component {
 
     render() {
         return (
-            <form className={this.props.classes.container}>
+            <ValidatorForm
+                ref="form"
+                className={this.props.classes.container}
+                onSubmit={this.handleSubmit}
+            >
                 {this.renderRedirect()}
 
                 <FormControl className={this.props.classes.formControl} fullWidth>
                     <InputLabel shrink  htmlFor="command" className={this.props.classes.bootstrapFormLabel}>
                         <Trans>app.admin.job.command</Trans>
                     </InputLabel>
-                    <InputBase fullWidth id="command" value={this.props.data.command} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                    <TextValidator
+                        fullWidth
+                        id="command"
+                        name={"command"}
+                        value={this.state.data.command}
+                        classes={{root: this.props.classes.bootstrapRoot}}
+                        onChange={this.handleInputChange}
+                        validators={['required']}
+                        errorMessages={['this field is required']}
+                    />
                 </FormControl>
 
                 <table>
-                {this.state.shareholders.map((shareholder, idx) => (
-                    <tr>
-                        <td>
-                    <FormControl key={idx} className={this.props.classes.formControl} fullWidth>
-                        <InputLabel shrink htmlFor="command" className={this.props.classes.bootstrapFormLabel}>
-                            <Trans>app.admin.job.arg</Trans> {idx + 1}
-                        </InputLabel>
+                    <tbody>
+                        {this.state.shareholders.map((shareholder, idx) => (
+                            <tr>
+                                <td>
+                                    <FormControl key={idx} className={this.props.classes.formControl} fullWidth>
+                                        <InputLabel shrink htmlFor="command" className={this.props.classes.bootstrapFormLabel}>
+                                            <Trans>app.admin.job.arg</Trans> {idx + 1}
+                                        </InputLabel>
 
-                        <InputBase id={"args_" + idx} name={"args[]"} value={this.props.data.command} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
-                    </FormControl>
-                        </td>
-                        <td>
-                            <Button
-                                variant="outlined"
-                                size="normal"
-                                color="primary"
-                                type="button"
-                                data-target={idx}
-                                onClick={this.handleRemoveShareholder}
-                            >
-                                <Trans>app.admin.layout.action.delete</Trans> <Trans>app.admin.layout.text.element</Trans>
-                            </Button>
-                        </td>
-                    </tr>
-                ))}
+                                        <TextValidator
+                                            id={"args_" + idx}
+                                            inputProps={{
+                                                "data-target": idx
+                                            }}
+                                            name={"args[]"}
+                                            value={this.state.data.args[idx]}
+                                            classes={{root: this.props.classes.bootstrapRoot}}
+                                            onChange={this.handleInputChange}
+                                        />
+                                    </FormControl>
+                                </td>
+                                <td>
+                                    <Button
+                                        key={"remove_" + idx}
+                                        variant="outlined"
+                                        size="medium"
+                                        color="primary"
+                                        type="button"
+                                        data-target={idx}
+                                        onClick={this.handleRemoveShareholder}
+                                    >
+                                        <Trans>app.admin.layout.action.delete</Trans> <Trans>app.admin.layout.text.element</Trans>
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
                 </table>
 
                 <div align={"left"} className={this.props.classes.formControl}>
                     <Button
                         align={"left"}
                         variant="outlined"
-                        size="normal"
+                        size="medium"
                         color="primary"
                         type="button"
                         onClick={this.handleAddShareholder}
@@ -166,14 +213,28 @@ class JobCreateForm extends React.Component {
                     <InputLabel shrink htmlFor="queue" className={this.props.classes.bootstrapFormLabel}>
                         <Trans>app.admin.job.queue</Trans>
                     </InputLabel>
-                    <InputBase id="queue" value={this.props.data.queue} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                    <TextValidator
+                        id="queue"
+                        name={"queue"}
+                        value={this.state.data.queue}
+                        classes={{root: this.props.classes.bootstrapRoot}}
+                        onChange={this.handleInputChange}
+                    />
                 </FormControl>
 
                 <FormControl className={this.props.classes.formControl} fullWidth>
                     <InputLabel shrink htmlFor="priority" className={this.props.classes.bootstrapFormLabel}>
                         <Trans>app.admin.job.priority</Trans>
                     </InputLabel>
-                    <InputBase id="priority" value={"0"} classes={{root: this.props.classes.bootstrapRoot, input: this.props.classes.bootstrapInput}} />
+                    <TextValidator
+                        id="priority"
+                        name={"priority"}
+                        value={this.state.data.priority}
+                        classes={{root: this.props.classes.bootstrapRoot}}
+                        onChange={this.handleInputChange}
+                        validators={['required', 'isNumber']}
+                        errorMessages={['this field is required', 'this field must be a number']}
+                    />
                 </FormControl>
 
                 <Divider component="hr" light={true} className={this.props.classes.divider} />
@@ -184,7 +245,6 @@ class JobCreateForm extends React.Component {
                         variant="contained"
                         color="primary"
                         className={this.props.classes.button}
-                        onClick={this.handleSubmit}
                     >
                         <Trans>app.admin.layout.action.save</Trans>
                     </Button>
@@ -197,7 +257,7 @@ class JobCreateForm extends React.Component {
                         <Trans>app.admin.layout.action.cancel</Trans>
                     </Button>
                 </div>
-            </form>
+            </ValidatorForm>
         )
     }
 }

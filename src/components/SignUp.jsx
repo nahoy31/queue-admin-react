@@ -91,7 +91,7 @@ var SignUp = createReactClass({
         };
 
         const instance = axios.create({
-            baseURL: 'http://localhost:8002',
+            baseURL: 'http://localhost:5000',
             timeout: 1000,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
@@ -104,7 +104,7 @@ var SignUp = createReactClass({
         instance.post('/api/login_check', form_data)
             .then(function (response) {
                 var instance2 = axios.create({
-                    baseURL: 'http://localhost:8002',
+                    baseURL: 'http://localhost:5000',
                     timeout: 1000,
                     headers: {
                         'Authorization': 'Bearer ' + response.data.token,

@@ -3,12 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Moment from 'moment';
-
-import { Trans } from 'react-i18next';
 
 import styles from './layout/styles.jsx';
 import Header from './Header.jsx';
@@ -45,7 +42,7 @@ class Consumption extends React.Component {
         };
 
         const instance = axios.create({
-            baseURL: 'http://localhost:8002',
+            baseURL: 'http://localhost:5000',
             timeout: 5000,
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -53,8 +50,6 @@ class Consumption extends React.Component {
                 'Charset': 'UTF-8'
             }
         });
-
-//        console.log('retrieve consumption periods');
 
         progress.style.display = 'block';
 

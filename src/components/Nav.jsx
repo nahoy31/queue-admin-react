@@ -44,5 +44,8 @@ export const secondaryListItems = (
         <ListItemLink to="/admin/profile/">
             <ListItemText primary={<Trans>app.admin.layout.nav.settings</Trans>} />
         </ListItemLink>
+        <ListItemLink to="/admin/plan/">
+            <ListItemText primary={<Trans>app.admin.layout.nav.settings.plan</Trans>} />
+        </ListItemLink>
     </div>
 );

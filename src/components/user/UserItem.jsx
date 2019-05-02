@@ -57,7 +57,7 @@ class UserItem extends React.Component {
         var token     = window.localStorage.getItem('access_token');
 
         const instance = axios.create({
-            baseURL: 'http://localhost:8002',
+            baseURL: 'http://localhost:5000',
             timeout: 5000,
             headers: {
                 'Authorization': 'Bearer ' + token,

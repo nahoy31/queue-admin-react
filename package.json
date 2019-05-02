@@ -10,10 +10,14 @@
     "moment": "^2.24.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-form-validator-core": "^0.6.3",
     "react-i18next": "^10.5.1",
+    "react-material-ui-form-validator": "^2.0.8",
     "react-router-dom": "^4.4.0",
     "react-scripts": "2.1.8",
-    "react-select": "^2.4.2"
+    "react-select": "^2.4.2",
+    "react-stripe-checkout": "^2.6.3",
+    "react-stripe-elements": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

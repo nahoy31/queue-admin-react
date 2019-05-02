@@ -4,12 +4,8 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Tooltip from '@material-ui/core/Tooltip';
-
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
@@ -33,10 +29,15 @@ class Job extends React.Component {
 
         this.state = {
             entities: [],
-            page: 1
+            page: 1,
+            canPagePrev: false,
+            canPageNext: false,
+            rowsPerPage: 30,
+            totalRows: 0
         };
 
-        this.handleRefresh = this.handleRefresh.bind(this);
+        this.handleChangePage    = this.handleChangePage.bind(this);
+        this.handleRefresh       = this.handleRefresh.bind(this);
         this.loadNotesFromServer = this.loadNotesFromServer.bind(this);
     }
 
@@ -131,7 +132,7 @@ class Job extends React.Component {
         }
 
         const instance = axios.create({
-            baseURL: 'http://localhost:8002',
+            baseURL: 'http://localhost:5000',
             timeout: 5000,
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -147,10 +148,28 @@ class Job extends React.Component {
 
         instance.get('/api/jobs?page=' + this.state.page + '&' + query)
             .then(function (response) {
+                var canPageNext = main.state.canPageNext;
+                var canPagePrev = main.state.canPagePrev;
+
                 progress.style.display = 'none';
 
+                if (typeof response.data['hydra:view']['hydra:previous'] !== 'undefined') {
+                    canPagePrev = true;
+                } else {
+                    canPagePrev = false;
+                }
+
+                if (typeof response.data['hydra:view']['hydra:next'] !== 'undefined') {
+                    canPageNext = true;
+                } else {
+                    canPageNext = false;
+                }
+
                 main.setState({
-                    entities: response.data['hydra:member']
+                    canPagePrev: canPagePrev,
+                    canPageNext: canPageNext,
+                    totalRows:   response.data['hydra:totalItems'],
+                    entities:    response.data['hydra:member']
                 });
             })
             .catch(function (error) {
@@ -161,21 +180,17 @@ class Job extends React.Component {
         ;
     }
 
-    handlePrev() {
-        var newPage = this.state.page - 1;
+    handleChangePage = (event, page) => {
+        var progress = document.getElementById('progress');
 
         this.setState({
-            page: newPage
+            page: page + 1
         });
-    }
 
-    handleNext() {
-        var newPage = this.state.page + 1;
+        progress.style.display = 'block';
 
-        this.setState({
-            page: newPage
-        });
-    }
+        this.loadNotesFromServer();
+    };
 
     handleRefresh() {
         var progress = document.getElementById('progress');
@@ -216,16 +231,15 @@ class Job extends React.Component {
 
                     <div className={this.props.classes.padX} >
                         <LinearProgress id='progress' style={{ display: 'block' }} />
-                        <JobList entities={this.state.entities} loadNotesFromServer={this.loadNotesFromServer} />
+                        <JobList
+                            entities={this.state.entities}
+                            loadNotesFromServer={this.loadNotesFromServer}
+                            page={this.state.page - 1}
+                            rowsPerPage={this.state.rowsPerPage}
+                            totalRows={this.state.totalRows}
+                            onChangePage={this.handleChangePage}
+                        />
                     </div>
-
-                    <button onClick={this.handlePrev}>
-                        Previous
-                    </button>
-
-                    <button href={"#"} onClick={this.handleNext}>
-                        Next
-                    </button>
                 </main>
                 <Footer />
             </div>

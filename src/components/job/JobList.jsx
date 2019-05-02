@@ -21,6 +21,7 @@ import Moment from 'moment';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import styles from '../layout/styles.jsx';
+import MyTablePagination from '../layout/MyTablePagination';
 
 import { Trans } from 'react-i18next';
 
@@ -44,6 +45,12 @@ class JobList extends React.Component {
                         </TableRow>
                     </TableHead>
                     <NoteList entities={this.props.entities} classes={this.props.classes} loadNotesFromServer={this.props.loadNotesFromServer} />
+                    <MyTablePagination
+                        page={this.props.page}
+                        rowsPerPage={this.props.rowsPerPage}
+                        totalRows={this.props.totalRows}
+                        onChangePage={this.props.onChangePage}
+                    />
                 </Table>
             </Paper>
         );
@@ -143,7 +150,7 @@ class NoteBox extends React.Component {
         };
 
         const instance = axios.create({
-            baseURL: 'http://localhost:8002',
+            baseURL: 'http://localhost:5000',
             timeout: 5000,
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -173,10 +180,11 @@ class NoteBox extends React.Component {
         var main      = this;
         var progress  = document.getElementById('progress');
         var token     = window.localStorage.getItem('access_token');
-        var id        = this.props.id;
+        var id        = this.props.id;    const { rows, rowsPerPage, page } = this.state;
+
 
         const instance = axios.create({
-            baseURL: 'http://localhost:8002',
+            baseURL: 'http://localhost:5000',
             timeout: 5000,
             headers: {
                 'Authorization': 'Bearer ' + token,

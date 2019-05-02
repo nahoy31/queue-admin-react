@@ -30,6 +30,7 @@ const resources = {
             "app.admin.layout.nav.logout": "Logout",
             "app.admin.layout.nav.settings": "Settings",
             "app.admin.layout.nav.settings.consumption": "Usage API",
+            "app.admin.layout.nav.settings.plan": "Plan",
 
             //################################
             //# consumption
@@ -133,6 +134,7 @@ const resources = {
             "app.admin.layout.nav.logout": "Déconnexion",
             "app.admin.layout.nav.settings": "Réglages",
             "app.admin.layout.nav.settings.consumption": "Consommation API",
+            "app.admin.layout.nav.settings.plan": "Formule",
 
             //################################
             //# consumption
@@ -216,7 +218,7 @@ i18n
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({
         resources,
-        lng: "en",
+        lng: "fr",
 
         keySeparator: false, // we do not use keys in form messages.welcome
 
